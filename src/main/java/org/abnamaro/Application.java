@@ -1,8 +1,8 @@
 package org.abnamaro;
 
-import org.abnamaro.recipes.index.Indexer;
-import org.abnamaro.recipes.entities.Recipes;
-import org.abnamaro.recipes.repository.RecipesRepository;
+import org.abnamaro.recipe.entities.Recipe;
+import org.abnamaro.recipe.index.Indexer;
+import org.abnamaro.recipe.repository.RecipeRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,23 +41,23 @@ public class Application {
     }
 
     @Bean
-    public ApplicationRunner initializeData(RecipesRepository recipesRepository) throws Exception {
+    public ApplicationRunner initializeData(RecipeRepository recipeRepository) throws Exception {
         return (ApplicationArguments args) -> {
-            List<Recipes> plants = Arrays.asList(
-                    new Recipes(false, 4, "egg, potato, rice, chicken" , "oven"),
-                    new Recipes(true, 2, "egg, potato, rice, meat" , "oven"),
-                    new Recipes(true, 5, "egg, potato, rice, salmon" , "air fryer"),
-                    new Recipes(false, 4, "rib, bean" , "cooked"),
-                    new Recipes(false, 4, "potato, fish" , "air fryer")
+            List<Recipe> plants = Arrays.asList(
+                    new Recipe(false, 4, "egg, potato, rice, chicken" , "oven"),
+                    new Recipe(true, 2, "egg, potato, rice, meat" , "oven"),
+                    new Recipe(true, 5, "egg, potato, rice, salmon" , "air fryer"),
+                    new Recipe(false, 4, "rib, bean" , "cooked"),
+                    new Recipe(false, 4, "potato, fish" , "air fryer")
             );
-            recipesRepository.saveAll(plants);
+            recipeRepository.saveAll(plants);
         };
     }
 
     @Bean
     public ApplicationRunner buildIndex(Indexer indexer) {
         return (ApplicationArguments args) -> {
-            indexer.indexPersistedData("org.abnamaro.recipes.entities.Recipes");
+            indexer.indexPersistedData("org.abnamaro.recipe.entities.Recipe");
         };
     }
 }

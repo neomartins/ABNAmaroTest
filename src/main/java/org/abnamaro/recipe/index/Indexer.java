@@ -1,4 +1,4 @@
-package org.abnamaro.recipes.index;
+package org.abnamaro.recipe.index;
 
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.massindexing.MassIndexer;

@@ -1,9 +1,9 @@
-package org.abnamaro.recipes.service;
+package org.abnamaro.recipe.service;
 
-import org.abnamaro.recipes.RecipesEnumTextSearch.RecipesTextSearchEnum;
-import org.abnamaro.recipes.entities.Recipes;
-import org.abnamaro.recipes.entities.SearchRequestDTO;
-import org.abnamaro.recipes.repository.RecipesRepository;
+import org.abnamaro.recipe.entities.Recipe;
+import org.abnamaro.recipe.entities.RecipeTextSearchEnum;
+import org.abnamaro.recipe.entities.SearchRequestDTO;
+import org.abnamaro.recipe.repository.RecipeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,57 +17,57 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class RecipesServiceTest {
+class RecipeServiceTest {
 
     @Autowired
-    private RecipesService recipesService;
+    private RecipeService recipeService;
 
     @Autowired
-    private RecipesRepository recipesRepository;
+    private RecipeRepository recipeRepository;
 
     @BeforeEach
     void setUp() {
-        Recipes recipes1 = new Recipes();
-        recipes1.setId(1);
-        recipes1.setIngredients("egg, potato, rice, chicken");
-        recipes1.setInstructions("oven");
-        recipes1.setServings(2);
-        recipes1.setVegetarian(true);
+        Recipe recipe1 = new Recipe();
+        recipe1.setId(1);
+        recipe1.setIngredients("egg, potato, rice, chicken");
+        recipe1.setInstructions("oven");
+        recipe1.setServings(2);
+        recipe1.setVegetarian(true);
 
-        Recipes recipes2 = new Recipes();
-        recipes2.setId(2);
-        recipes2.setIngredients("egg, potato, rice, meat");
-        recipes2.setInstructions("oven");
-        recipes2.setServings(4);
-        recipes2.setVegetarian(false);
+        Recipe recipe2 = new Recipe();
+        recipe2.setId(2);
+        recipe2.setIngredients("egg, potato, rice, meat");
+        recipe2.setInstructions("oven");
+        recipe2.setServings(4);
+        recipe2.setVegetarian(false);
 
-        Recipes recipes3 = new Recipes();
-        recipes3.setId(3);
-        recipes3.setIngredients("egg, potato, rice, salmon");
-        recipes3.setInstructions("air fryer");
-        recipes3.setServings(3);
-        recipes3.setVegetarian(true);
+        Recipe recipe3 = new Recipe();
+        recipe3.setId(3);
+        recipe3.setIngredients("egg, potato, rice, salmon");
+        recipe3.setInstructions("air fryer");
+        recipe3.setServings(3);
+        recipe3.setVegetarian(true);
 
-        Recipes recipes4 = new Recipes();
-        recipes4.setId(4);
-        recipes4.setIngredients("egg, potato, rice, meat");
-        recipes4.setInstructions("cooked");
-        recipes4.setServings(3);
-        recipes4.setVegetarian(false);
+        Recipe recipe4 = new Recipe();
+        recipe4.setId(4);
+        recipe4.setIngredients("egg, potato, rice, meat");
+        recipe4.setInstructions("cooked");
+        recipe4.setServings(3);
+        recipe4.setVegetarian(false);
 
-        Recipes recipes5 = new Recipes();
-        recipes5.setId(5);
-        recipes5.setIngredients("potato, fish");
-        recipes5.setInstructions("air fryer");
-        recipes5.setServings(5);
-        recipes5.setVegetarian(false);
+        Recipe recipe5 = new Recipe();
+        recipe5.setId(5);
+        recipe5.setIngredients("potato, fish");
+        recipe5.setInstructions("air fryer");
+        recipe5.setServings(5);
+        recipe5.setVegetarian(false);
 
-        recipesRepository.saveAll(Arrays.asList(recipes1, recipes2, recipes3, recipes4, recipes5));
+        recipeRepository.saveAll(Arrays.asList(recipe1, recipe2, recipe3, recipe4, recipe5));
     }
 
     @AfterEach
     void tearDown() {
-        recipesRepository.deleteAll();
+        recipeRepository.deleteAll();
     }
 
     @Test
@@ -75,8 +75,8 @@ class RecipesServiceTest {
     void searchRecipesWhenTextIsEmptyThenReturnAllRecipes() {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setText("");
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(5, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(5, recipeList.size());
     }
 
     @Test
@@ -84,8 +84,8 @@ class RecipesServiceTest {
     void searchRecipesWhenTextIsBlankThenReturnAllRecipes() {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setText(" ");
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(5, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(5, recipeList.size());
     }
 
     @Test
@@ -94,9 +94,9 @@ class RecipesServiceTest {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setText(null);
 
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
 
-        assertEquals(5, recipesList.size());
+        assertEquals(5, recipeList.size());
     }
 
 
@@ -110,9 +110,9 @@ class RecipesServiceTest {
         searchRequestDTO.setFields(null);
         searchRequestDTO.setExclude(null);
 
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
 
-        assertEquals(4, recipesList.size());
+        assertEquals(4, recipeList.size());
     }
 
     @Test
@@ -122,12 +122,12 @@ class RecipesServiceTest {
     searchRecipesWhenFieldsEqualsToAllAndExcludeIsNullOrFalseThenReturnRecipeThatContainTheTextInIngredientsField() {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setText("egg");
-        searchRequestDTO.setFields(RecipesTextSearchEnum.All);
+        searchRequestDTO.setFields(RecipeTextSearchEnum.All);
         searchRequestDTO.setExclude(null);
 
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
 
-        assertEquals(4, recipesList.size());
+        assertEquals(4, recipeList.size());
     }
 
     @Test
@@ -137,8 +137,8 @@ class RecipesServiceTest {
     searchRecipesWhenFieldsIsVegetarianIsTrue() {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setIsVegetarian(true);
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(2, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(2, recipeList.size());
     }
 
     @Test
@@ -149,8 +149,8 @@ class RecipesServiceTest {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setExclude(true);
         searchRequestDTO.setText("egg air fryer");
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(1, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(1, recipeList.size());
     }
 
     @Test
@@ -160,8 +160,8 @@ class RecipesServiceTest {
     searchAllRecipesWhenInstructionHasOven() {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setText("oven");
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(2, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(2, recipeList.size());
     }
 
     @Test
@@ -172,8 +172,8 @@ class RecipesServiceTest {
         SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
         searchRequestDTO.setExclude(true);
         searchRequestDTO.setText("oven chicken");
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(1, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(1, recipeList.size());
     }
 
     @Test
@@ -185,7 +185,7 @@ class RecipesServiceTest {
         searchRequestDTO.setExclude(true);
         searchRequestDTO.setText("oven chicken");
         searchRequestDTO.setServings(5);
-        List<Recipes> recipesList = recipesService.searchRecipes(searchRequestDTO);
-        assertEquals(0, recipesList.size());
+        List<Recipe> recipeList = recipeService.searchRecipes(searchRequestDTO);
+        assertEquals(0, recipeList.size());
     }
 }

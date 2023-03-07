@@ -1,4 +1,4 @@
-package org.abnamaro.recipes.entities;
+package org.abnamaro.recipe.entities;
 
 import lombok.*;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
@@ -8,18 +8,19 @@ import javax.persistence.*;
 
 @Indexed
 @Entity
-@Table(name = "recipes")
+@Table(name = "recipe")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Recipes {
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private boolean isVegetarian;
     private int servings;
     @FullTextField
@@ -27,7 +28,7 @@ public class Recipes {
     @FullTextField
     private String instructions;
 
-    public Recipes(boolean isVegetarian, int servings, String ingredients, String instructions) {
+    public Recipe(boolean isVegetarian, int servings, String ingredients, String instructions) {
         this.isVegetarian = isVegetarian;
         this.servings = servings;
         this.ingredients = ingredients;

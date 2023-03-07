@@ -1,4 +1,4 @@
-package org.abnamaro.recipes.repository;
+package org.abnamaro.recipe.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;

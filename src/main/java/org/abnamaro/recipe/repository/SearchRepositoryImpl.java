@@ -1,4 +1,4 @@
-package org.abnamaro.recipes.repository;
+package org.abnamaro.recipe.repository;
 
 
 import org.hibernate.search.engine.search.query.SearchResult;
