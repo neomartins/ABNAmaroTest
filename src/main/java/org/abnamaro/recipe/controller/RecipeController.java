@@ -38,7 +38,7 @@ public class RecipeController {
     }
 
     @ApiOperation(value = "update existing recipe ")
-    @PutMapping("/{{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateRecipe(@RequestBody Recipe recipe, @PathVariable Integer id) {
         try {
             recipeService.getRecipe(id);
